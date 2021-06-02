@@ -11,11 +11,11 @@ ERR4281016,/data2/public/zhanghaohong/5infant_data/ERR4281016_2.fastq.gz,reverse
 ```
 ## 导入数据
 ```
-qiime tools import --type 'SampleData[PairedEndSequencesWithQuality]' --input-path manifest.txt --output-path paired-end-demux_test.qza --input-format PairedEndFastqManifestPhred33
+qiime tools import --type 'SampleData[PairedEndSequencesWithQuality]' --input-path manifest.txt --output-path paired-end-demux.qza --input-format PairedEndFastqManifestPhred33
 ```
 ## 拼接
 ```
-qiime vsearch join-pairs --i-demultiplexed-seqs paired-end-demux_test.qza --o-joined-sequences joined.qza
+qiime vsearch join-pairs --i-demultiplexed-seqs paired-end-demux.qza --o-joined-sequences joined.qza
 ```
 ## 拼接后可视化
 ```
