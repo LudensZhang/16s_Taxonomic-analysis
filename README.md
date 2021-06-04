@@ -3,7 +3,7 @@
 ```
 ascp -v -QT -l 400m -P33001 -k1 -i /home/zhanghaohong/.aspera/connect/etc/asperaweb_id_dsa.openssh --user era-fasp --mode recv --host fasp.sra.ebi.ac.uk --file-list path.txt ./
 ```
-path.txt的数据格式例
+path.txt的数据格式示例
 ```
 /vol1/fastq/ERR428/006/ERR4281016/ERR4281016_1.fastq.gz
 /vol1/fastq/ERR428/006/ERR4281016/ERR4281016_2.fastq.gz
