@@ -78,3 +78,7 @@ biom convert    -i table_exported/feature-table_w_tax.biom    -o table_exported/
 ```
 sed -i '1d' feature-table_w_tax.txt
 ```
+## 利用adjust-abundance.py得到最终丰度表
+```
+python adjust-abundance.py -i feature-table_w_tax.txt -o abundance.csv
+```
