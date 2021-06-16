@@ -31,8 +31,13 @@ qiime vsearch join-pairs --i-demultiplexed-seqs paired-end-demux.qza --o-joined-
 qiime demux summarize --i-data joined.qza --o-visualization joined.qzv
 ```
 ## 根据需求去噪
+#### deblur
 ```
 qiime deblur denoise-16S  --i-demultiplexed-seqs joined.qza  --p-trim-length 251  --o-table table.qza  --o-representative-sequences rep_set.qza  --o-stats stats.qza --p-sample-stats
+```
+#### dada2
+```
+time qiime dada2 denoise-paired --i-demultiplexed-seqs paired-end-demux.qza --o-table table.qza --o-representative-sequences rep-set.qza --o-denoising-stats stats.qza --p-trim-left-f 0 --p-trim-left-r 0 --p-trunc-len-f 250 --p-trunc-len-r 250
 ```
 ## 下载分类器
 ```
@@ -53,7 +58,7 @@ qiime metadata tabulate --m-input-file taxonomy.qza --o-visualization taxonomy.q
 ```
 qiime tools export    --input-path taxonomy.qza --output-path taxa
 ```
-##### 修改物种注释适配biom格式
+#### 修改物种注释适配biom格式
 ```
 sed -i -e '1 s/Feature/#Feature/' -e '1 s/Taxon/taxonomy/' taxa/taxonomy.tsv
 ```
@@ -68,4 +73,8 @@ biom add-metadata    -i table_exported/feature-table.biom    -o table_exported/f
 #### biom转tsv
 ```
 biom convert    -i table_exported/feature-table_w_tax.biom    -o table_exported/feature-table_w_tax.txt    --to-tsv    --header-key taxonomy
+```
+#### 去除首行
+```
+sed -i '1d' feature-table_w_tax.txt
 ```
