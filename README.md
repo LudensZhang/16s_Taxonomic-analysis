@@ -47,7 +47,7 @@ wget \
 ```
 ## 物种注释
 ```
-qiime feature-classifier classify-sklearn   --i-classifier gg-13-8-99-515-806-nb-classifier.qza   --i-reads rep_set.qza   --o-classification taxonomy.qza
+qiime feature-classifier classify-sklearn   --i-classifier gg-13-8-99-515-806-nb-classifier.qza   --i-reads rep-set.qza   --o-classification taxonomy.qza
 ```
 ## 查看物种注释
 ```
@@ -76,6 +76,7 @@ biom convert    -i table_exported/feature-table_w_tax.biom    -o table_exported/
 ```
 #### 去除首行
 ```
+cd table_exported
 sed -i '1d' feature-table_w_tax.txt
 ```
 ## 利用adjust-abundance.py得到最终丰度表
