@@ -36,20 +36,39 @@ qiime tools import \
 
 ## 拼接
 ```
-qiime vsearch join-pairs --i-demultiplexed-seqs paired-end-demux.qza --o-joined-sequences joined.qza
+qiime vsearch join-pairs \
+--i-demultiplexed-seqs \
+paired-end-demux.qza \
+--o-joined-sequences joined.qza
 ```
 ## 拼接后可视化
 ```
-qiime demux summarize --i-data joined.qza --o-visualization joined.qzv
+qiime demux summarize \
+--i-data joined.qza \
+--o-visualization joined.qzv
 ```
 ## 根据需求去噪
 #### deblur
 ```
-qiime deblur denoise-16S  --i-demultiplexed-seqs joined.qza  --p-trim-length 251  --o-table table.qza  --o-representative-sequences rep_set.qza  --o-stats stats.qza --p-sample-stats
+qiime deblur denoise-16S  \
+--i-demultiplexed-seqs joined.qza  \
+--p-trim-length 251  --o-table table.qza  \
+--o-representative-sequences rep_set.qza  \
+--o-stats stats.qza \
+--p-sample-stats
 ```
 #### dada2
 ```
-time qiime dada2 denoise-paired --i-demultiplexed-seqs paired-end-demux.qza --o-table table.qza --o-representative-sequences rep-set.qza --o-denoising-stats stats.qza --p-trim-left-f 0 --p-trim-left-r 0 --p-trunc-len-f 250 --p-trunc-len-r 250
+time qiime dada2 denoise-paired \
+--i-demultiplexed-seqs \
+paired-end-demux.qza \
+--o-table table.qza \
+--o-representative-sequences rep-set.qza \
+--o-denoising-stats stats.qza \
+--p-trim-left-f 0 \
+--p-trim-left-r 0 \
+--p-trunc-len-f 250 \
+--p-trunc-len-r 250
 ```
 ## 下载分类器
 ```
@@ -59,16 +78,23 @@ wget \
 ```
 ## 物种注释
 ```
-qiime feature-classifier classify-sklearn   --i-classifier gg-13-8-99-515-806-nb-classifier.qza   --i-reads rep-set.qza   --o-classification taxonomy.qza
+qiime feature-classifier classify-sklearn   \
+--i-classifier gg-13-8-99-515-806-nb-classifier.qza   \
+--i-reads rep-set.qza   \
+--o-classification taxonomy.qza
 ```
 ## 查看物种注释
 ```
-qiime metadata tabulate --m-input-file taxonomy.qza --o-visualization taxonomy.qzv
+qiime metadata tabulate \
+--m-input-file taxonomy.qza \
+--o-visualization taxonomy.qzv
 ```
 ## 利用biom完成丰度表
 #### 得到物种注释
 ```
-qiime tools export    --input-path taxonomy.qza --output-path taxa
+qiime tools export \
+--input-path taxonomy.qza \
+--output-path taxa
 ```
 #### 修改物种注释适配biom格式
 ```
@@ -76,15 +102,25 @@ sed -i -e '1 s/Feature/#Feature/' -e '1 s/Taxon/taxonomy/' taxa/taxonomy.tsv
 ```
 #### 导出biom表
 ```
-qiime tools export --input-path table.qza --output-path table_exported
+qiime tools export \
+--input-path table.qza \
+--output-path table_exported
 ```
 #### 丰度表生成
 ```
-biom add-metadata    -i table_exported/feature-table.biom    -o table_exported/feature-table_w_tax.biom    --observation-metadata-fp taxa/taxonomy.tsv    --sc-separated taxonomy
+biom add-metadata    \
+-i table_exported/feature-table.biom    \
+-o table_exported/feature-table_w_tax.biom    \
+--observation-metadata-fp taxa/taxonomy.tsv    \
+--sc-separated taxonomy
 ```
 #### biom转tsv
 ```
-biom convert    -i table_exported/feature-table_w_tax.biom    -o table_exported/feature-table_w_tax.txt    --to-tsv    --header-key taxonomy
+biom convert    \
+-i table_exported/feature-table_w_tax.biom    \
+-o table_exported/feature-table_w_tax.txt    \
+--to-tsv   \
+--header-key taxonomy
 ```
 #### 去除首行
 ```
