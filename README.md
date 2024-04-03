@@ -26,20 +26,13 @@ qiime tools import \
 --output-path paired-end-demux.qza \
 --input-format PairedEndFastqManifestPhred33
 ```
-*fasta 文件*
-```
-qiime tools import \
---type 'FeatureData[Sequence]' \
---input-path data/ERR1077587_FASTQ_16SrRNA.fasta \                            
---output-path data.qza
-```
 
 ## 拼接
 ```
-qiime vsearch join-pairs \
---i-demultiplexed-seqs \
-paired-end-demux.qza \
---o-joined-sequences joined.qza
+qiime vsearch merge-pairs \
+--i-demultiplexed-seqs paired-end-demux.qza \
+--o-merged-sequences data-merged.qza \
+--o-unmerged-sequences data-unmerged.qza
 ```
 ## 拼接后可视化
 ```
