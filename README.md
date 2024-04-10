@@ -37,14 +37,14 @@ qiime vsearch merge-pairs \
 ## 拼接后可视化
 ```
 qiime demux summarize \
---i-data joined.qza \
---o-visualization joined.qzv
+--i-data data-merged.qza \
+--o-visualization data-merged.qzv
 ```
 ## 根据需求去噪
 #### deblur
 ```
 qiime deblur denoise-16S  \
---i-demultiplexed-seqs joined.qza  \
+--i-demultiplexed-seqs data-merged.qza  \
 --p-trim-length 251  --o-table table.qza  \
 --o-representative-sequences rep_set.qza  \
 --o-stats stats.qza \
@@ -53,7 +53,7 @@ qiime deblur denoise-16S  \
 #### dada2
 ```
 time qiime dada2 denoise-paired \
---i-demultiplexed-seqs paired-end-demux.qza \
+--i-demultiplexed-seqs data-merged.qza \
 --o-table table.qza \
 --o-representative-sequences rep-set.qza \
 --o-denoising-stats stats.qza \
