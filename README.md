@@ -53,7 +53,7 @@ qiime deblur denoise-16S  \
 #### dada2
 ```
 time qiime dada2 denoise-paired \
---i-demultiplexed-seqs data-merged.qza \
+--i-demultiplexed-seqs paired-end-demux.qza \
 --o-table table.qza \
 --o-representative-sequences rep-set.qza \
 --o-denoising-stats stats.qza \
